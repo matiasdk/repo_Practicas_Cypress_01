@@ -1,0 +1,107 @@
+{
+	"info": {
+		"_postman_id": "540ec502-7a0c-4237-984c-af7bcf24a102",
+		"name": "PRACTICAS QA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39996043"
+	},
+	"item": [
+		{
+			"name": "Prueba 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Verificar que la respuesta contenga una lista de objetos JSON con campos como userId, id, title, y body\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response).to.be.an('array').that.is.not.empty;\r",
+							"    response.forEach((item) => {\r",
+							"        pm.expect(item).to.have.property('userId');\r",
+							"        pm.expect(item).to.have.property('id');\r",
+							"        pm.expect(item).to.have.property('title');\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/albums",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"albums"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Titulo Correcto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Count the occurrences of \"userId\" in the response body\r",
+							"var responseBody = pm.response.json();\r",
+							"var userIdCount = responseBody.filter(item => item.hasOwnProperty('userId')).length;\r",
+							"pm.test(\"Number of userId occurrences is correct\", function () {\r",
+							"    pm.expect(userIdCount).to.equal(responseBody.length);\r",
+							"});\r",
+							"\r",
+							"// Extracting the response body\r",
+							"var responseBody = pm.response.json();\r",
+							"\r",
+							"// Checking if \"omnis laborum odio\" is a valid \"title\"\r",
+							"pm.test(\"Check if 'omnis laborum odio' is a valid title\", function () {\r",
+							"    var titleExists = responseBody.some(item => item.title === 'omnis laborum odio');\r",
+							"    pm.expect(titleExists).to.be.true;\r",
+							"});\r",
+							"\r",
+							"// Check if the response time is less than 10ms\r",
+							"pm.test(\"Response time is less than 10ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.lessThan(10);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/albums",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"albums"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
